@@ -1,0 +1,33 @@
+name: Automotive MLOps CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  mlops-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r Assignments/Assignment_10/requirements.txt
+
+    - name: Execute Model Training & MLflow Logging
+      run: |
+        python -m jupyter nbconvert --to notebook --execute Assignments/Assignment_10/TTL_Assignment_10.ipynb --output TTL_Assignment_10.ipynb
+
+    - name: Validate Standalone Inference Script
+      run: |
+        python Assignments/Assignment_10/predict.py
