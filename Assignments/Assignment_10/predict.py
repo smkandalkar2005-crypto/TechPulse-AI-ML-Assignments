@@ -9,6 +9,8 @@ print("==================================================")
 
 model_path = 'rf_model.joblib'
 if not os.path.exists(model_path):
+    model_path = os.path.join(os.path.dirname(__file__), 'rf_model.joblib')
+if not os.path.exists(model_path):
     raise FileNotFoundError(f"Model artifact '{model_path}' not found. Train and export model first.")
 
 model = joblib.load(model_path)
